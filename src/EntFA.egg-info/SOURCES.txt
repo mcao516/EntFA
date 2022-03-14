@@ -1,0 +1,6 @@
+README.md
+setup.py
+src/EntFA.egg-info/PKG-INFO
+src/EntFA.egg-info/SOURCES.txt
+src/EntFA.egg-info/dependency_links.txt
+src/EntFA.egg-info/top_level.txt
