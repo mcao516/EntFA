@@ -15,6 +15,8 @@ class ConditionalSequenceGenerator:
         self.encode_func = bart.encode
         self.decode_func = bart.decode
         self.max_positions = bart.max_positions
+        if type(self.max_positions) == int:
+            self.max_positions = [self.max_positions]
         self.encode_line = bart.task.source_dictionary.encode_line
         
         self._initialize()
