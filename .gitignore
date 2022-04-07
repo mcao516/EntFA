@@ -1,5 +1,6 @@
 .ipynb_checkpoints/
 __pycache__/
+*.pkl
 
 # Byte-compiled / optimized / DLL files
 *.py[cod]
