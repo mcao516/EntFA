@@ -29,3 +29,4 @@ python examples/train_knn.py \
 ```
 
 ### Evaluation
+Check `examples/evaluation.ipynb`.
