@@ -16,7 +16,9 @@ Conditional masked language model (CMLM) checkpoint can be found [here](https://
 
 ### Train KNN Classifier
 ```bash
-OUTPUT_DIR=
+OUTPUT_DIR=knn_checkpoint
+
+mkdir $OUTPUT_DIR
 python examples/train_knn.py \
   --train-path data/train.json \
   --test-path data/test.json \
