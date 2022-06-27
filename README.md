@@ -27,6 +27,7 @@ python examples/train_knn.py \
   --lm-path models/bart.large \
   --output-dir $OUTPUT_DIR;
 ```
+You can also find an example at `examples/train_knn_classifier.ipynb`.
 
 ### Evaluation
 Check `examples/evaluation.ipynb`.
