@@ -14,6 +14,16 @@ The code is based on Huggingface's [Transformers](https://github.com/huggingface
 ## How to Run
 Conditional masked language model (CMLM) checkpoint can be found [here](https://drive.google.com/drive/folders/10ibVc5R7q4Gc0TH1AIRo7IaLCV83SkpF?usp=sharing). For masked language model (MLM), download `bart.large` at Fairseq's [BART](https://github.com/pytorch/fairseq/tree/main/examples/bart) repository.
 
-### Train
+### Train KNN Classifier
+```bash
+OUTPUT_DIR=
+python examples/train_knn.py \
+  --train-path data/train.json \
+  --test-path data/test.json \
+  --cmlm-model-path models/checkpoint.pt \
+  --data-name-or-path models/xsum-bin \
+  --lm-path models/bart.large \
+  --output-dir $OUTPUT_DIR;
+```
 
 ### Evaluation
