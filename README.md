@@ -30,6 +30,8 @@ python examples/train_knn.py \
 You can also find an example at `examples/train_knn_classifier.ipynb`.
 
 ### Evaluation
+Evaluation input file format: one document/summary per line.
+
 ```bash
 SOURCE_PATH=test.source
 TARGET_PATH=test.target
@@ -42,4 +44,4 @@ python examples/evaluation.py \
     --mlm-path models/bart.large \
     --knn-model-path models/knn_classifier.pkl;
 ```
-Check `examples/evaluation.ipynb`.
+Also check `examples/evaluation.ipynb`.
