@@ -17,17 +17,29 @@ Conditional masked language model (CMLM) checkpoint can be found [here](https://
 ### Train KNN Classifier
 ```bash
 OUTPUT_DIR=knn_checkpoint
-
 mkdir $OUTPUT_DIR
+
 python examples/train_knn.py \
   --train-path data/train.json \
   --test-path data/test.json \
-  --cmlm-model-path models/checkpoint.pt \
+  --cmlm-model-path models \
   --data-name-or-path models/xsum-bin \
-  --lm-path models/bart.large \
+  --mlm-path models/bart.large \
   --output-dir $OUTPUT_DIR;
 ```
 You can also find an example at `examples/train_knn_classifier.ipynb`.
 
 ### Evaluation
+```bash
+SOURCE_PATH=test.source
+TARGET_PATH=test.target
+
+python examples/evaluation.py \
+    --source-path $SOURCE_PATH \
+    --target-path $TARGET_PATH \
+    --cmlm-model-path models \
+    --data-name-or-path models/xsum-bin \
+    --mlm-path models/bart.large \
+    --knn-model-path models/knn_classifier.pkl;
+```
 Check `examples/evaluation.ipynb`.
