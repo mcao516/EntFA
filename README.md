@@ -30,7 +30,7 @@ python examples/train_knn.py \
 You can also find an example at `examples/train_knn_classifier.ipynb`.
 
 ### Evaluation
-Evaluation input file format: one document/summary per line.
+Evalute the entity-level factuality of generated summaries. Input file format: one document/summary per line.
 
 ```bash
 SOURCE_PATH=test.source
