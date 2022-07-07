@@ -34,7 +34,7 @@ Evalute the entity-level factuality of generated summaries. Input file format: o
 
 ```bash
 SOURCE_PATH=test.source
-TARGET_PATH=test.target
+TARGET_PATH=test.hypothesis
 
 python examples/evaluation.py \
     --source-path $SOURCE_PATH \
