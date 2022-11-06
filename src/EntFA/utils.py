@@ -83,9 +83,15 @@ def get_probability_parallel(generator, src_input, tgt_input, position, entity, 
         if mask_filling:
             assert tok[0].item() == 0
             tok, tokp = tok[1:], tokp[1:]
-        tok = [generator.decode_func(i.unsqueeze(0)) for i in tok]
-        probs.append(get_probability(p, tok, tokp, e).item())
-
+        
+        tok_ = []
+        for t in tok:
+            if t.item() == 1:
+                tok_.append("<pad>")
+            else:
+                tok_.append(generator.decode_func(t.unsqueeze(0)))
+        probs.append(get_probability(p, tok_, tokp, e).item())
+    
     return probs
 
 
