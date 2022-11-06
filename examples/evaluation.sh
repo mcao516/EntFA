@@ -1,6 +1,12 @@
 #!/bin/bash
-SOURCE_PATH=test.source
-TARGET_PATH=test.hypothesis
+module load cuda/11.0
+module load python/3.8
+
+source $HOME/envFS/bin/activate
+
+
+SOURCE_PATH=$SCRATCH/summarization/XSum/fairseq_files/test.source
+TARGET_PATH=$SCRATCH/summarization/XSum/fairseq_files/test.target
 
 python evaluation.py \
     --source_path $SOURCE_PATH \

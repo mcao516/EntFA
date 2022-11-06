@@ -39,10 +39,14 @@ def build_models(args):
 
 def extract_features(source, hypothesis, prior_model, model):
     features = []
-    empty = 0
+    empty, error_count = 0, 0
 
     for index in tqdm(range(len(hypothesis))):
         source_doc, target_doc = source[index], hypothesis[index]
+        target_doc = target_doc.replace("“", '"').replace("”", '"').replace("’", "'")
+        target_doc = target_doc.replace("%.", "% .")
+        target_doc = target_doc.replace("%,", "% ,")
+        target_doc = target_doc.replace("%)", "% )")
         
         # extract entities
         ent_parts = nlp(target_doc).to_json()['ents']
@@ -53,21 +57,25 @@ def extract_features(source, hypothesis, prior_model, model):
             pos_inputs = prepare_cmlm_inputs(source_doc, target_doc, ent_parts=ent_parts)
 
             # calculate probability features
-            pri_probs = get_probability_parallel(prior_model, pri_inputs[0], pri_inputs[1], pri_inputs[2], pri_inputs[3], mask_filling=True)
-            pos_probs = get_probability_parallel(model, pos_inputs[0], pos_inputs[1], pos_inputs[2], pos_inputs[3])
-            
-            # overlapping feature
-            source_doc = source_doc.lower()
-            overlap = []
-            for e in entities:
-                if e[:4] == 'the ': e = e[4:]
-                if e.lower() in source_doc:
-                    overlap.append(1)
-                else:
-                    overlap.append(0)
-            
-            assert len(pri_probs) == len(pos_probs) == len(pri_inputs[2]) == len(pos_inputs[3])
-            features.append((pos_inputs[3], pos_inputs[2], pri_probs, pos_probs, overlap))
+            try:
+                pri_probs = get_probability_parallel(prior_model, pri_inputs[0], pri_inputs[1], pri_inputs[2], pri_inputs[3], mask_filling=True)
+                pos_probs = get_probability_parallel(model, pos_inputs[0], pos_inputs[1], pos_inputs[2], pos_inputs[3])
+                
+                # overlapping feature
+                source_doc = source_doc.lower()
+                overlap = []
+                for e in entities:
+                    if e[:4] == 'the ': e = e[4:]
+                    if e.lower() in source_doc:
+                        overlap.append(1)
+                    else:
+                        overlap.append(0)
+                
+                assert len(pri_probs) == len(pos_probs) == len(pri_inputs[2]) == len(pos_inputs[3])
+                features.append((pos_inputs[3], pos_inputs[2], pri_probs, pos_probs, overlap))
+            except AssertionError as err:
+                print("{}: {}".format(index, err))
+                error_count += 1
             
         else:
             empty += 1
